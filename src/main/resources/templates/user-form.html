@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+	<title>Save User</title>
+</head>
+
+<body>
+
+
+	<div style="align-items: center;text-align: center;padding-top: 10px;">
+		<div class="container" style="width:400px;background-color: rgb(248, 248, 248);padding: 10px;border-radius: 10px;  box-shadow: 5px 10px 8px #888888;">
+			
+			<h3 >User Directory</h3>
+			<hr>
+			
+			<p class="h4 mb-4">Save User</p>
+		
+			<form action="#" th:action="@{/user/save}"
+							 th:object="${user}" method="POST">
+			
+				<!-- Add hidden form field to handle update -->
+				<input type="hidden" th:field="*{userId}" />
+				<input type="hidden" th:field="*{avatar}" />
+				<input type="text" th:field="*{userName}"
+						class="form-control mb-4 col-12" placeholder="User Name" >
+	
+				<input type="text" th:field="*{phoneNumber}"
+						class="form-control mb-4 col-12" placeholder="Phone Number">
+	
+				<input type="text" th:field="*{email}"
+						class="form-control mb-4 col-12" placeholder="Email" >
+				
+				<div class="custom-control custom-radio custom-control-inline ">
+					<input type="radio" id="option1" name="option1" class="custom-control-input" th:value=true th:checked="${gender}" th:field="*{gender}">
+					<label class="custom-control-label" for="option1">Male</label>
+				</div>
+				<div class="custom-control custom-radio custom-control-inline">
+					<input type="radio" id="option2" name="option2" class="custom-control-input" th:value=false th:field="*{gender}">
+					<label class="custom-control-label" for="option2">Female</label>
+				</div>
+						
+				<input type="hidden" th:field="*{password}"
+						class="form-control mb-4 col-12" placeholder="password">
+						
+					
+					
+				<button type="submit" class="btn btn-info col-5">Save</button>
+							
+			</form>
+			<p th:text="${error}" style="color: red"></p>
+		
+			<hr>
+			<div style="text-align: center;">
+				<a th:href="@{/}" >Back to Home</a>
+			</div>
+			
+			
+		</div>
+		</div>
+	</div>
+	
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+

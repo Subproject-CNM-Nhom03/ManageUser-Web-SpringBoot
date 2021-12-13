@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Manage Account</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"  th:href="@{/css/trangchu.css}">
+
+</head>
+<body>
+  <div class="container">
+    <div sec:authorize="isAuthenticated()">
+        <form id="logoutForm" method="POST" th:action="@{/logout}">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+
+        <!--  <h2>Welcome <span sec:authentication="name"></span> | <a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>-->
+        <h2 class="logo"><a th:href="@{/}">Manage User Accounts</a> |<a onclick="document.forms['logoutForm'].submit()">Logout</a></h2>
+		
+		<form  th:action="@{/search}" method="GET" >
+			<input type="text" id="phone" name="phone"class="input2"
+					placeholder="Search User By PhoneNumer" th:value="${phone}">
+			<button type="submit" class="btnSearch"><i class="fa fa-search"></i></button>
+		</form>
+
+		<div>
+			<a th:href="@{/showFormForAdd}" style="height: auto;float: left;"><button class="add"  >+ Add User</button></a>
+			<div style="float: right;margin-top: 15px;">
+				<p>Rows per page:50 
+					<a th:href="@{/}" style="height: auto;"><button  style="width:70px; border-radius: 5px;"> Previus</button></a>
+					 1/1
+					<a th:href="@{/}" style="height: auto;"><button  style="width:70px; border-radius: 5px;"> Next</button></a>
+				</p>
+			</div>
+		</div>
+       
+		
+        <table class="table table-bordered table-striped">
+		<thead class="thead-dark">
+			<tr>
+				<th>Id</th>
+				<th>Avatar</th>
+				<th>User Name</th>
+				<th>Phone Number</th>
+				<th>Email</th>
+				<th>Gender</th>
+				<th>Update</th>
+				<th>Disable</th>
+				
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr th:each="user : ${listUser}">
+			
+				<td th:text="${user.userId}" />	
+				<td><img th:src="${user.avatar}" width="35px" height="35px"></td>
+				
+				<td th:text="${user.userName}" />	
+				<td th:text="${user.phoneNumber}" />	
+				<td th:text="${user.email}" />	
+			
+			
+				<td>
+				<span th:if="${user.gender==true}">Male</span>
+				<span th:if="${user.gender==false}">Female</span>
+				
+				</td>	
+				<td>
+					<!-- Add "update" button/link-->
+					
+					<a th:href="@{/showFormForUpdate(userId=${user.userId})}"
+					   class="btn btn-info btn-sm">
+						Update
+					</a> 
+					
+					
+					<!-- Add "delete" button/link 			
+					-->		
+					
+				</td>
+				<td>
+				<span th:if="${user.disable == false}"><a th:href="@{/vohieuhoa(userId=${user.userId})}"
+					   class="btn btn-success btn-sm"
+					   onclick="if (!(confirm('Are you sure you want to enable this user?'))) return false">
+						Disable
+					</a></span>
+				<span th:if="${user.disable == true}"><a th:href="@{/vohieuhoa(userId=${user.userId})}"
+					   class="btn btn-danger btn-sm"
+					   onclick="if (!(confirm('Are you sure you want to disable this user?'))) return false">
+						Enable
+					</a></span>
+				</td>
+				
+				
+			</tr>
+		</tbody>		
+	</table>
+	<p th:text="${result}"></p>
+
+	
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
